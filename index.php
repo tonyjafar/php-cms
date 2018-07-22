@@ -11,8 +11,8 @@
             <div class="col-md-8">
 
                 <h1 class="page-header">
-                    Page Heading
-                    <small>Secondary Text</small>
+                    Our Blog Posts
+                    <small>List of all posts starting the newest Post.</small>
                 </h1>
 
                 <!-- First Blog Post -->
