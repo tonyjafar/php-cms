@@ -32,12 +32,15 @@
                         echo "<a class='btn btn-primary' href='#'>Read More <span class='glyphicon glyphicon-chevron-right'></span></a><hr>";
                         }    
                     }else{
-                    echo "<h1>No Reult Found</h1>";
+                        echo "<h1>No Reult Found</h1>";
                 }
                     }else{
-                    echo "<h1>No Reult Found</h1>";
+                        echo "<h1>No Reult Found</h1>";
                 }
-                    }
+                    }else{
+                        $newURL = "index.php";
+                        header('Location: '.$newURL);
+                }
                 ?>
             </div>
 
