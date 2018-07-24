@@ -13,7 +13,7 @@ foreach($db as $key => $value){
 $conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
 if (!$conn){
-    echo die("Internal Server Error") . mysqli_error($conn);
+    die("Internal Server Error" . mysqli_error($conn));
 }
 
 ?>

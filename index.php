@@ -20,7 +20,7 @@
                     $query = "select * from posts order by post_date DESC";
                     $posts = mysqli_query($conn, $query);
                     while ($row = mysqli_fetch_assoc($posts)){
-                        echo "<h2><a href='#'>{$row['post_title']}</a></h2>";
+                        echo "<h2><a href='post.php?id={$row['post_id']}'>{$row['post_title']}</a></h2>";
                         echo "<p class='lead'>by <a href='#'>{$row['post_author']}</a></p>";
                         echo "<p><span class='glyphicon glyphicon-time'></span>{$row['post_date']}</p><hr>";
                         echo "<img class='img-responsive' src='images/{$row['post_image']}' alt=''><hr>";
