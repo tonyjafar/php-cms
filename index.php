@@ -17,7 +17,7 @@
 
                 <!-- First Blog Post -->
                 <?php
-                    $query = "select * from posts order by post_date DESC";
+                    $query = "select * from posts where post_status = 'public' order by post_date DESC";
                     $posts = mysqli_query($conn, $query);
                     while ($row = mysqli_fetch_assoc($posts)){
                         echo "<h2><a href='post.php?id={$row['post_id']}'>{$row['post_title']}</a></h2>";

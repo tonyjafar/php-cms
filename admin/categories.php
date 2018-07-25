@@ -4,10 +4,18 @@
 if (isset($_POST['Category'])){
     $cat = mysqli_real_escape_string($conn, $_POST['Category']);
     if($cat != ""){
-        $query = "insert into categories (cat_title) values ('$cat')";
-        $result = mysqli_query($conn, $query);
-        if (!$result){
-            echo mysqli_error($conn);
+        $check = "select cat_title from categories";
+        $check_res = mysqli_query($conn, $check);
+        $titles = array();
+        while ($row = mysqli_fetch_row($check_res)){
+            array_push($titles, $row[0]);
+        }
+        if (!in_array($cat, $titles)){
+            $query = "insert into categories (cat_title) values ('$cat')";
+            $result = mysqli_query($conn, $query);
+            if (!$result){
+                echo mysqli_error($conn);
+            }
         }
     }else{
         $url = "categories.php";
@@ -64,6 +72,7 @@ if (isset($_POST['Category'])){
       <th scope='col'>#</th>
       <th scope='col'>ID</th>
       <th scope='col'>Category</th>
+      <th scope='col'>Nr.Articles</th>
     </tr>
   </thead>
   <tbody>
@@ -76,7 +85,11 @@ if ($result) {
     while ($row = mysqli_fetch_assoc($result)){
         $id = $row['cat_id'];
         $category = $row['cat_title'];
-        echo "<tr><th scope='row'>$x</th><td>$id</td><td>$category</td></tr>";
+        $countState = "select count(post_category_id) from posts where post_category_id = '$id'";
+        $result_count = mysqli_query($conn, $countState);
+        $count = mysqli_fetch_assoc($result_count);
+        $count2 = $count['count(post_category_id)'];
+        echo "<tr><th scope='row'>$x</th><td>$id</td><td>$category</td><td>$count2</td></tr>";
         $x++;
     }
     

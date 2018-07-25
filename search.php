@@ -20,7 +20,7 @@
                 if (isset($_POST['search'])){
                     $search = mysqli_real_escape_string($conn, $_POST['search']);
                     if ($search != ""){
-                        $get_stat = "select * from posts where post_tags like '%{$search}%' order by post_date DESC";
+                        $get_stat = "select * from posts where post_tags like '%{$search}%' and post_status = 'public' order by post_date DESC";
                         $posts = mysqli_query($conn, $get_stat);
                         if (mysqli_num_rows($posts) > 0){
                             while ($row = mysqli_fetch_assoc($posts)){

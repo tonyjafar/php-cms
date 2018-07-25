@@ -16,7 +16,7 @@
                 
                     if (isset($_GET['id'])){
                         $id = mysqli_real_escape_string($conn, $_GET['id']);
-                        $query = "select * from posts where post_id = '$id'";
+                        $query = "select * from posts where post_id = '$id' and post_status = 'public'";
                         $result = mysqli_query($conn, $query);
                         if (mysqli_num_rows($result) !=0){
                             while ($row = mysqli_fetch_assoc($result)){
@@ -27,7 +27,8 @@
                                 echo "<p class='lead'>{$row['post_content']}</p><hr>";
                             }
                         }else{
-                            echo "<h1>Post Not Found</h2>";
+                            $url = "index.php";
+                            header('Location: '.$url);
                         }
                     }else{
                         $url = "index.php";
