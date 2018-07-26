@@ -25,7 +25,7 @@
                         echo "<p><span class='glyphicon glyphicon-time'></span>{$row['post_date']}</p><hr>";
                         echo "<img class='img-responsive' src='images/{$row['post_image']}' alt=''><hr>";
                         echo "<p>{$row['post_content']}</p>";
-                        echo "<a class='btn btn-primary' href='#'>Read More <span class='glyphicon glyphicon-chevron-right'></span></a><hr>";
+                        echo "<a class='btn btn-primary' href='post.php?id={$row['post_id']}'>Read More <span class='glyphicon glyphicon-chevron-right'></span></a><hr>";
                     }
                 ?>
             </div>
