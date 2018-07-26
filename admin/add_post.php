@@ -4,6 +4,7 @@
 <?php
     $field_error = False;
     $insert_error = False;
+    $title_error = False;
     if (isset($_POST['submit'])){
         foreach ($_POST as $key => $value){
             if ($value == ""){
@@ -13,24 +14,31 @@
         }
     }
     if (isset($_POST['submit']) && !$field_error){
-                $cat_id = mysqli_real_escape_string($conn, $_POST['cat_id']);
                 $post_title = mysqli_real_escape_string($conn, $_POST['post_title']);
-                $post_author = mysqli_real_escape_string($conn, $_POST['post_author']);
-                $date = mysqli_real_escape_string($conn, $_POST['date']);
-                $image = mysqli_real_escape_string($conn, $_POST['image']);
-                $content = mysqli_real_escape_string($conn, $_POST['content']);
-                $tags = mysqli_real_escape_string($conn, $_POST['tags']);
-                $user = mysqli_real_escape_string($conn, $_POST['user']);
-                $status = mysqli_real_escape_string($conn, $_POST['status']);
-                $statePart1 = "insert into posts (post_category_id, post_title, post_author, post_date, post_image, post_content, post_tags, post_user, post_status) ";
-                $statePart2 = "values ('$cat_id', '$post_title', '$post_author', '$date', '$image', '$content', '$tags', '$user', '$status')";
-                $stat = $statePart1 . $statePart2;
-                $result = mysqli_query($conn, $stat);
-                if (!$result){
-                    $insert_error = True;
-                    echo mysqli_error($conn);
+                $check_title = "select post_title from posts where post_title = '$post_title'";
+                $result = mysqli_query($conn, $check_title);
+                if (mysqli_num_rows($result) == 0){
+                    $cat_id = mysqli_real_escape_string($conn, $_POST['cat_id']);
+                    $post_author = mysqli_real_escape_string($conn, $_POST['post_author']);
+                    $date = mysqli_real_escape_string($conn, $_POST['date']);
+                    $image = mysqli_real_escape_string($conn, $_POST['image']);
+                    $content = mysqli_real_escape_string($conn, $_POST['content']);
+                    $tags = mysqli_real_escape_string($conn, $_POST['tags']);
+                    $user = mysqli_real_escape_string($conn, $_POST['user']);
+                    $status = mysqli_real_escape_string($conn, $_POST['status']);
+                    $statePart1 = "insert into posts (post_category_id, post_title, post_author, post_date, post_image, post_content, post_tags, post_user, post_status) ";
+                    $statePart2 = "values ('$cat_id', '$post_title', '$post_author', '$date', '$image', '$content', '$tags', '$user', '$status')";
+                    $stat = $statePart1 . $statePart2;
+                    $result = mysqli_query($conn, $stat);
+                    if (!$result){
+                        $insert_error = True;
+                        echo mysqli_error($conn);
 
-            }
+                    }
+                }else{
+                    $title_error = True;
+                    
+                }
         }
 
 ?>
@@ -51,7 +59,24 @@
                             <small>Author</small>
                         </h1>
                     </div>
+                    
                     <div class="col-xs-6">
+                    <?php
+    if ($field_error){
+        echo "<div class='alert alert-danger' role='alert'>";
+        echo "<h3>Please fill in all fields</h3>";
+        echo "</div>";
+    }elseif ($insert_error){
+        echo "<div class='alert alert-danger' role='alert'>";
+        echo "<h3>Could not Insert DB Error</h3>";
+        echo "</div>";
+    }elseif ($title_error){
+        echo "<div class='alert alert-danger' role='alert'>";
+        echo "<h3>Post Title is already taken!!</h3>";
+        echo "</div>";
+    }
+?>
+
                      <form action="add_post.php" method="post">
         
         <div class="form-group">
@@ -117,19 +142,6 @@
         <input class="btn btn-success form-group" type="submit" value="Add Post" name="submit">
         </div>
     </form>
-            
-    <?php
-    if ($field_error){
-        echo "<div class='alert alert-danger' role='alert'>";
-        echo "<h3>Please fill in all fields</h3>";
-        echo "</div>";
-    }elseif ($insert_error){
-        echo "<div class='alert alert-danger' role='alert'>";
-        echo "<h3>Could not Insert DB Error</h3>";
-        echo "</div>";
-    }
-?>
-
                 </div>
             </div>
             </div>

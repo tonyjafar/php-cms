@@ -17,21 +17,34 @@
                             <small>Author</small>
                         </h1>
                     </div>
+                    <div class="col-xs-6">
+<table class='table table-hover'>
+  <thead>
+    <tr>
+      <th scope='col'>#</th>
+      <th scope='col'>ID</th>
+      <th scope='col'>Title</th>
+    </tr>
+  </thead>
+  <tbody>
                                 
             <?php
                     
                     $query = "select * from posts order by post_date DESC";
                     $posts = mysqli_query($conn, $query);
+                    $x = 1;
                     while ($row = mysqli_fetch_assoc($posts)){
-                        echo "<h2><a href='../post.php?id={$row['post_id']}'>{$row['post_title']}</a></h2>";
-                        echo "<p class='lead'>by <a href='#'>{$row['post_author']}</a></p>";
-                        echo "<p><span class='glyphicon glyphicon-time'></span>{$row['post_date']}</p><hr>";
-                        echo "<img class='img-responsive' src='../images/{$row['post_image']}' alt=''><hr>";
-                        echo "<p>{$row['post_content']}</p>";
-                        echo "<a class='btn btn-primary' href='edit-post.php?edit={$row['post_id']}'>Edit Post <span class='glyphicon glyphicon-chevron-right'></span></a><hr>";
+                        $id = $row['post_id'];
+                        $title = $row['post_title'];
+                        echo "<tr><th scope='row'>$x</th><td>$id</td><td>$title</td><td><a class='btn btn-primary' href='edit-post.php?edit={$row['post_id']}'>Edit Post <span class='glyphicon glyphicon-chevron-right'></span></a><hr></td></tr>";
+                        $x++;
                     }
+    
                     
                 ?>
+    </tbody>
+</table>
+</div>
                 </div>
             </div>
         
