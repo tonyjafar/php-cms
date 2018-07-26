@@ -18,6 +18,13 @@
                         </h1>
                     </div>
                     <div class="col-xs-6">
+                    <?php
+                        $countStat = "select count(*) from posts";
+                        $result = mysqli_query($conn, $countStat);
+                        $row = mysqli_fetch_assoc($result);
+                        $count = $row['count(*)'];
+                        echo "<h3>You Have $count Posts</h3>";
+                    ?>
 <table class='table table-hover'>
   <thead>
     <tr>

@@ -5,6 +5,7 @@
     $field_error = False;
     $insert_error = False;
     $title_error = False;
+    $noErrors = False;
     if (isset($_POST['submit'])){
         foreach ($_POST as $key => $value){
             if ($value == ""){
@@ -34,6 +35,8 @@
                         $insert_error = True;
                         echo mysqli_error($conn);
 
+                    }else{
+                        $noErrors = True;
                     }
                 }else{
                     $title_error = True;
@@ -73,6 +76,10 @@
     }elseif ($title_error){
         echo "<div class='alert alert-danger' role='alert'>";
         echo "<h3>Post Title is already taken!!</h3>";
+        echo "</div>";
+    }elseif ($noErrors){
+        echo "<div class='alert alert-success' role='alert'>";
+        echo "Post created successfully";
         echo "</div>";
     }
 ?>
