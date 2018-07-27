@@ -14,7 +14,7 @@
     }
     if (isset($_POST['submit']) && !$field_error){
                 $id = $_GET['id'];
-                $cat_id = mysqli_real_escape_string($conn, $_POST['cat_id']);
+                $cat_id_new = mysqli_real_escape_string($conn, $_POST['cat_id']);
                 $post_title = mysqli_real_escape_string($conn, $_POST['post_title']);
                 $post_author = mysqli_real_escape_string($conn, $_POST['post_author']);
                 $date = mysqli_real_escape_string($conn, $_POST['date']);
@@ -23,7 +23,7 @@
                 $tags = mysqli_real_escape_string($conn, $_POST['tags']);
                 $user = mysqli_real_escape_string($conn, $_POST['user']);
                 $status = mysqli_real_escape_string($conn, $_POST['status']);
-                $statePart1 = "update posts set post_category_id = '$cat_id', post_title = '$post_title', post_author = '$post_author', post_date = '$date', ";
+                $statePart1 = "update posts set post_category_id = '$cat_id_new', post_title = '$post_title', post_author = '$post_author', post_date = '$date', ";
                 $statPart2 = "post_image = '$image', post_content = '$content', post_tags = '$tags', post_user = '$user', post_status = '$status' where post_id = '$id'";
                 $stat = $statePart1 . $statPart2;
                 $result = mysqli_query($conn, $stat);

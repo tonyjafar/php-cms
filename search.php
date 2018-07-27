@@ -35,7 +35,8 @@
                             echo "<h1>No Reult Found</h1>";
                         }
                     }else{
-                        echo "<h1>No Reult Found</h1>";
+                        $newURL = "index.php";
+                        header('Location: '.$newURL);
                     }
                 }else{
                     $newURL = "index.php";

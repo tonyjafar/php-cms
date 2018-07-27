@@ -23,7 +23,11 @@
                         $result = mysqli_query($conn, $countStat);
                         $row = mysqli_fetch_assoc($result);
                         $count = $row['count(*)'];
-                        echo "<h3>You Have $count Posts</h3>";
+                        if ($count > 1){
+                            echo "<h3>You Have $count Posts</h3>";
+                        }else{
+                            echo "<h3>You Have $count Post</h3>";
+                        }
                     ?>
 <table class='table table-hover'>
   <thead>
@@ -36,7 +40,6 @@
   <tbody>
                                 
             <?php
-                    
                     $query = "select * from posts order by post_date DESC";
                     $posts = mysqli_query($conn, $query);
                     $x = 1;
@@ -52,6 +55,35 @@
     </tbody>
 </table>
 </div>
+          <div class="col-xs-6">
+           <form action="all_posts.php" method="POST">
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="search" placeholder="Search by Titile">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="submit">
+                                <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                        </span>
+                    </div>
+                    </form>
+                    <?php
+                        if (isset($_POST['search'])){
+                            $search = mysqli_real_escape_string($conn, $_POST['search']);
+                            if ($search != ""){
+                                $get_stat = "select * from posts where post_title like '%{$search}%' order by post_date DESC";
+                                $posts = mysqli_query($conn, $get_stat);
+                                if (mysqli_num_rows($posts) > 0){
+                                    while ($row = mysqli_fetch_assoc($posts)){
+                                        echo "<h2><a href='../post.php?id={$row['post_id']}'>{$row['post_title']}</a></h2>";
+                                        echo "<a class='btn btn-primary' href='edit-post.php?edit={$row['post_id']}'>Edit Post <span class='glyphicon glyphicon-chevron-right'></span></a><hr>";
+                                    }    
+                                }else{
+                                    echo "<h1>No Reult Found</h1>";
+                                }
+                            }
+                    }
+                    ?>
+                    <div></div>
                 </div>
             </div>
         
