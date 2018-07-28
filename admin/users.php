@@ -58,12 +58,29 @@ class Users{
         
     }
     
-    function IsAdmin(){
+    function IsAdmin($username){
+        $conn = mysqli_connect("localhost", "root", "", "cms");
+        $checkUser = "select admin from users where username = '$username'";
+        $reslut = mysqli_query($conn, $checkUser);
+        $row = mysqli_fetch_assoc($result);
+        if ($row['admin'] == 'yes'){
+            return True;
+        }else{
+            return False;
+        }
         
     }
     
     function IsActive(){
-        
+        $conn = mysqli_connect("localhost", "root", "", "cms");
+        $checkUser = "select active from users where username = '$username'";
+        $reslut = mysqli_query($conn, $checkUser);
+        $row = mysqli_fetch_assoc($result);
+        if ($row['active'] == 'yes'){
+            return True;
+        }else{
+            return False;
+        }
     }
     
 }
