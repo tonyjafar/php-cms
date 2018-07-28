@@ -2,6 +2,8 @@
     <?php include "../includes/db.php"; ?>
     
 <?php
+    $edit = False;
+    $delete = False;
     $field_error = False;
     $insert_error = False;
     if (isset($_POST['submit'])){
@@ -13,26 +15,36 @@
         }
     }
     if (isset($_POST['submit']) && !$field_error){
-                $id = $_GET['id'];
-                $cat_id_new = mysqli_real_escape_string($conn, $_POST['cat_id']);
-                $post_title = mysqli_real_escape_string($conn, $_POST['post_title']);
-                $post_author = mysqli_real_escape_string($conn, $_POST['post_author']);
-                $date = mysqli_real_escape_string($conn, $_POST['date']);
-                $image = mysqli_real_escape_string($conn, $_POST['image']);
-                $content = mysqli_real_escape_string($conn, $_POST['content']);
-                $tags = mysqli_real_escape_string($conn, $_POST['tags']);
-                $user = mysqli_real_escape_string($conn, $_POST['user']);
-                $status = mysqli_real_escape_string($conn, $_POST['status']);
-                $statePart1 = "update posts set post_category_id = '$cat_id_new', post_title = '$post_title', post_author = '$post_author', post_date = '$date', ";
-                $statPart2 = "post_image = '$image', post_content = '$content', post_tags = '$tags', post_user = '$user', post_status = '$status' where post_id = '$id'";
-                $stat = $statePart1 . $statPart2;
-                $result = mysqli_query($conn, $stat);
-                if (!$result){
-                   echo mysqli_error($conn);
-                }
+                    $id = $_GET['id'];
+                    $cat_id_new = mysqli_real_escape_string($conn, $_POST['cat_id']);
+                    $post_title = mysqli_real_escape_string($conn, $_POST['post_title']);
+                    $post_author = mysqli_real_escape_string($conn, $_POST['post_author']);
+                    $date = mysqli_real_escape_string($conn, $_POST['date']);
+                    $image = mysqli_real_escape_string($conn, $_POST['image']);
+                    $content = mysqli_real_escape_string($conn, $_POST['content']);
+                    $tags = mysqli_real_escape_string($conn, $_POST['tags']);
+                    $user = mysqli_real_escape_string($conn, $_POST['user']);
+                    $status = mysqli_real_escape_string($conn, $_POST['status']);
+                    $statePart1 = "update posts set post_category_id = '$cat_id_new', post_title = '$post_title', post_author = '$post_author', post_date = '$date', ";
+                    $statPart2 = "post_image = '$image', post_content = '$content', post_tags = '$tags', post_user = '$user', post_status = '$status' where post_id = '$id'";
+                    $stat = $statePart1 . $statPart2;
+                    $result = mysqli_query($conn, $stat);
+                    if (!$result){
+                        echo mysqli_error($conn);
+                    }
+  
                 $url = "all_posts.php";
                 header('Location: '.$url);
-        }
+        }elseif(isset($_POST['submit-Del'])){
+                    $id = $_GET['id'];
+                    $state = "delete from posts where post_id = '$id'";
+                    $result = mysqli_query($conn, $state);
+                    if (!$result){
+                        echo mysqli_error($conn);
+                    }
+        $url = "all_posts.php";
+                header('Location: '.$url);
+                        }
 
     elseif (isset($_GET['edit'])){
         $id = mysqli_real_escape_string($conn, $_GET['edit']);
@@ -49,7 +61,28 @@
                 $content = $row['post_content'];
                 $user = $row['post_user'];
                 $status = $row['post_status'];
+            
             }
+            $edit = True;
+        }
+    }elseif (isset($_GET['delete'])){
+        $id = mysqli_real_escape_string($conn, $_GET['delete']);
+        $state = "select * from posts where post_id = '$id'";
+        $result = mysqli_query($conn, $state);
+        if ($result){
+            while ($row = mysqli_fetch_assoc($result)){
+                $cat = $row['post_category_id'];
+                $title = $row['post_title'];
+                $author = $row['post_author'];
+                $date = $row['post_date'];
+                $tags = $row['post_tags'];
+                $image = $row['post_image'];
+                $content = $row['post_content'];
+                $user = $row['post_user'];
+                $status = $row['post_status'];
+            
+            }
+            $delete = True;
         }
     }else{
         $url = "all_posts.php";
@@ -148,7 +181,14 @@
         </div>
         <br><br>
         <div class="form-group">
-        <input class="btn btn-success form-group" type="submit" value="Edit Post" name="submit">
+        <?php 
+            if ($edit){
+                echo "<input class='btn btn-success form-group' type='submit' value='Edit Post' name='submit'>";
+            }else{
+                echo "<input class='btn btn-danger form-group' type='submit' value='Delete Post' name='submit-Del'>";
+                
+            }
+            ?>
         </div>
     </form>
             

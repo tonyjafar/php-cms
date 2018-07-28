@@ -101,6 +101,7 @@ if ($result) {
 </tbody>
 </table>
 <div class="col-xs-6">
+<div class="well">
 <form action="categories.php" method="post">
       <div class="form-group">
        <label for="Category">Add Category</label>
@@ -109,8 +110,20 @@ if ($result) {
         <input class="btn btn-primary" type="submit" value="Add" name="submit">
 </form>
 </div>
-<br><br>
+            </div>
 <div class="col-xs-6">
+<div class="well">
+<form action="categories.php" method="post">
+      <div class="form-group">
+       <label for="Category">Delete Category</label>
+        <input class="form-control" id="Category" type="text" name="Del-Category" placeholder="Delete Category">
+       </div>
+        <input class="btn btn-danger" type="submit" value="Delete" name="submit">
+</form>
+    </div>
+            </div>
+<div class="col-xs-6">
+<div class="well">
 <form action="categories.php" method="post">
       <div class="form-group">
        <label for="Category">Old Category</label>
@@ -123,17 +136,7 @@ if ($result) {
         <input class="btn btn-success" type="submit" value="Edit" name="submit">
 </form>
 </div>
-<div class="col-xs-6">
-<form action="categories.php" method="post">
-      <div class="form-group">
-       <label for="Category">Delete Category</label>
-        <input class="form-control" id="Category" type="text" name="Del-Category" placeholder="Delete Category">
-       </div>
-        <input class="btn btn-danger" type="submit" value="Delete" name="submit">
-</form>
-</div>
-</div>
-                </div>
             </div>
+
         </div>
 <?php include "includes/footer.php"; ?>
