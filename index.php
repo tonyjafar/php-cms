@@ -1,4 +1,36 @@
-
+<?php 
+            if (isset($_POST['add'])){
+                include "admin/users.php";
+                $user = new Users();
+                $result = $user -> CreateUser();
+                switch ($result){
+                    case "Could not create the user please try again later":
+                        echo "<div class='alert alert-danger' role='alert'>";
+                        echo "<h3>Could not create the user please try again later</h3>";
+                        echo "</div>";
+                        break;
+                    case "Username is already taken":
+                        echo "<div class='alert alert-danger' role='alert'>";
+                        echo "<h3>Username is already takens</h3>";
+                        echo "</div>";
+                        break;
+                    case "Password should be 6 char long":
+                        echo "<div class='alert alert-danger' role='alert'>";
+                        echo "<h3>Password should be 6 char long</h3>";
+                        echo "</div>";
+                        break;
+                    case "please fill in all fields":
+                        echo "<div class='alert alert-danger' role='alert'>";
+                        echo "<h3>please fill in all fields</h3>";
+                        echo "</div>";
+                        break;
+                    case "done":
+                        echo "<div class='alert alert-success' role='alert'>";
+                        echo "User registered successfully";
+                        echo "</div>";
+                }
+            }
+    ?>
     <?php include "includes/header.php"; ?>
      <!-- Navigation -->
   <?php include "includes/navigation.php"; ?>
@@ -31,8 +63,9 @@
             </div>
 
             <!-- Blog Sidebar Widgets Column -->
+   
       <?php include "includes/sidebar.php"; ?>
-
+ 
         </div>
         <!-- /.row -->
 

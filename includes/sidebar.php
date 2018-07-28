@@ -1,4 +1,7 @@
-           <div class="col-md-4">
+
+                
+
+                                      <div class="col-md-4">
 
                 <!-- Blog Search Well -->
                 <div class="well">
@@ -15,6 +18,26 @@
                     </form>
                     <!-- /.input-group -->
                 </div>
+                
+                <div class="well">
+                   <?php
+                    
+                    ?>
+                    <h4>Register</h4>
+                    <form action="index.php" method="POST">
+                    <div class="form-group">
+                       <label for="email">Email</label>
+                        <input id="email" type="email" class="form-control" name="username">
+                        </div>
+                        <div class="form-group">
+                        <label for="password">Password</label>
+                        <input id="password" type="password" class="form-control" name="password">
+                        </div>
+                        <span class="input-group-btn">
+                            <input class="btn btn-success form-group" type="submit" value="Register" name="add">
+                        </span>
+                         </form>
+                    </div>
 
                 <!-- Blog Categories Well -->
                 <div class="well">
