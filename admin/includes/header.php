@@ -1,4 +1,15 @@
 <?php ob_start(); ?>
+<?php 
+include "users.php"; 
+$user = new Users();
+if (!$user -> LoggedIn()){
+    header("Location: ../index.php");
+}
+$adminname = $_COOKIE['loggedIn'];
+if (!$user -> IsAdmin($adminname)){
+    header("Location: ../index.php");
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 

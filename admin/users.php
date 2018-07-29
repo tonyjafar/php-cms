@@ -4,23 +4,28 @@ class Users{
             $conn = mysqli_connect("localhost", "root", "", "cms");
             $username = mysqli_real_escape_string($conn, $_POST['username']);
             $password = mysqli_real_escape_string($conn, $_POST['password']);
+            $password2 = mysqli_real_escape_string($conn, $_POST['password2']);
             if ($username != "" && $password != ""){
                 if (strlen($password) > 5){
-                    $checkUser = "select username from users where username = '$username'";
-                    $result = mysqli_query($conn, $checkUser);
-                    if (mysqli_num_rows($result) == 0){
-                        $hash = "$2y$10$";
-                        $salt = "mysuperoverkillingsaltiwillnverused";
-                        $hashSalt = $hash . $salt;
-                        $encPass = crypt($password, $hashSalt);
-                        $createUser = "insert into users (username, password) ";
-                        $createUser .= "values ('$username', '$encPass')";
-                        $createResult = mysqli_query($conn, $createUser);
-                        if (!$createResult){
-                            return "Could not create the user please try again later";
+                    if ($password === $password2){
+                        $checkUser = "select username from users where username = '$username'";
+                        $result = mysqli_query($conn, $checkUser);
+                        if (mysqli_num_rows($result) == 0){
+                            $hash = "$2y$10$";
+                            $salt = "mysuperoverkillingsaltiwillnverused";
+                            $hashSalt = $hash . $salt;
+                            $encPass = crypt($password, $hashSalt);
+                            $createUser = "insert into users (username, password) ";
+                            $createUser .= "values ('$username', '$encPass')";
+                            $createResult = mysqli_query($conn, $createUser);
+                            if (!$createResult){
+                                return "Could not create the user please try again later";
+                            }
+                         }else {
+                            return "Username is already taken";
                         }
-                    }else {
-                        return "Username is already taken";
+                   }else{
+                        return "Passwords do not matched";
                     }
                 }else {
                     return "Password should be 6 char long";
@@ -32,18 +37,54 @@ class Users{
     }
     
     
-    function UpdateUser(){
+    function GetUser(){
+        if ($this -> LoggedIn()){
+            $username = $_GET['username'];
+            if ($_COOKIE['loggedIn'] == $username){
+                return $username;
+            }else{
+                header('Location: index.php');
+            }
+        }else{
+            header('Location: index.php');
+        }
         
     }
     
-    
-    function ListUsers(){
-        
-    }
-    
-    
-    function DelUser(){
-        
+    function ChangePass($username){
+            $conn = mysqli_connect("localhost", "root", "", "cms");
+            $oldPass = mysqli_real_escape_string($conn, $_POST['old-password']);
+            $pass1 = mysqli_real_escape_string($conn, $_POST['new-password']);
+            $pass2 = mysqli_real_escape_string($conn, $_POST['password2']);
+            if ($oldPass != "" && $pass1 != "" && $pass2 != ""){
+                $checkOld = "select password from users where username='$username'";
+                $result_checkOld = mysqli_query($conn, $checkOld);
+                $result_checkOld = mysqli_fetch_assoc($result_checkOld);
+                $oldPassDB = $result_checkOld['password'];
+                if (password_verify($oldPass, $oldPassDB)){
+                    if($pass1 === $pass2){
+                        if (strlen($pass1) > 5){
+                            $hash = "$2y$10$";
+                            $salt = "mysuperoverkillingsaltiwillnverused";
+                            $hashSalt = $hash . $salt;
+                            $encPass = crypt($pass1, $hashSalt);
+                            $update = "update users set password = '$encPass' where username = '$username'";
+                            $result_update = mysqli_query($conn, $update);
+                            if ($result_update){
+                                return "OK";
+                            }
+                        }else{
+                            return "1";
+                        }
+                    }else{
+                        return "2"; 
+                    }
+                }else{
+                    return "3";
+                }
+            }else{
+                return "0";
+            }
     }
     
     function LoggedIn(){
@@ -51,7 +92,7 @@ class Users{
             $name = "loggedIn";
             $value = $_COOKIE['loggedIn'];
             $expire = time() + (60 * 60 * 24);
-            setcookie($name, $value, $expire);
+            setcookie($name, $value, $expire, "/");
             return True;
         }else{
             return False;
@@ -77,7 +118,7 @@ class Users{
                             $name = "loggedIn";
                             $value = $username;
                             $expire = time() + (60 * 60 * 24);
-                            setcookie($name, $value, $expire);
+                            setcookie($name, $value, $expire, "/");
                             header("Location: index.php");
                         }else{
                         return "Username or Password is not correct";
@@ -104,7 +145,7 @@ class Users{
         $name = "loggedIn";
         $value = "";
         unset($_COOKIE[$cookie_name]);
-        setcookie($name, '', time() - 3600);
+        setcookie($name, '', time() - 3600, "/");
         $newURL = "index.php";
         header('Location: '.$newURL);
     }

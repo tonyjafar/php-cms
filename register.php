@@ -16,6 +16,10 @@ if ($log){
        <label for="password">Password</label>
        <input id="password" type="password" class="form-control" name="password">
        </div>
+       <div class="form-group">
+       <label for="password2">Retype Password</label>
+       <input id="password2" type="password" class="form-control" name="password2">
+       </div>
         <input class="btn btn-success form-group" type="submit" value="Register" name="add">
 </form>
 <br><br><br>
@@ -31,6 +35,11 @@ if ($log){
                     case "Username is already taken":
                         echo "<div class='alert alert-danger' role='alert'>";
                         echo "<h3>Username is already takens</h3>";
+                        echo "</div>";
+                        break;
+                    case "Passwords do not matched":
+                        echo "<div class='alert alert-danger' role='alert'>";
+                        echo "<h3>Passwords do not matched</h3>";
                         echo "</div>";
                         break;
                     case "Password should be 6 char long":

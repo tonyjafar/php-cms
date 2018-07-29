@@ -14,19 +14,19 @@
                     <div class="col-lg-12">
                         <h1 class="page-header">
                             Welcome to Admin
-                           <small><?php echo $adminname; ?></small>
+                            <small><?php echo $adminname; ?></small>
                         </h1>
                     </div>
                     <div class="col-xs-6">
                     <?php
-                        $countStat = "select count(*) from posts";
+                        $countStat = "select count(*) from users where active = 'no'";
                         $result = mysqli_query($conn, $countStat);
                         $row = mysqli_fetch_assoc($result);
                         $count = $row['count(*)'];
                         if ($count > 1){
-                            echo "<h3>You Have $count Posts</h3>";
+                            echo "<h3>You Have $count Users</h3>";
                         }else{
-                            echo "<h3>You Have $count Post</h3>";
+                            echo "<h3>You Have $count User</h3>";
                         }
                     ?>
 <table class='table table-hover'>
@@ -34,19 +34,23 @@
     <tr>
       <th scope='col'>#</th>
       <th scope='col'>ID</th>
-      <th scope='col'>Title</th>
+      <th scope='col'>Username</th>
+      <th scope='col'>Active</th>
+      <th scope='col'>Admin</th>
     </tr>
   </thead>
   <tbody>
                                 
             <?php
-                    $query = "select * from posts order by post_date DESC";
-                    $posts = mysqli_query($conn, $query);
+                    $query = "select * from users where active = 'no'";
+                    $users = mysqli_query($conn, $query);
                     $x = 1;
-                    while ($row = mysqli_fetch_assoc($posts)){
-                        $id = $row['post_id'];
-                        $title = $row['post_title'];
-                        echo "<tr><th scope='row'>$x</th><td>$id</td><td>$title</td><td><a class='btn btn-success' href='edit-post.php?edit={$row['post_id']}'>Edit Post <span class='glyphicon glyphicon-chevron-right'></span></a><hr></td><td><a class='btn btn-danger' href='edit-post.php?delete={$row['post_id']}'>Delete Post <span class='glyphicon glyphicon-chevron-right'></span></a><hr></td></tr>";
+                    while ($row = mysqli_fetch_assoc($users)){
+                        $id = $row['user_id'];
+                        $username = $row['username'];
+                        $admin = $row['admin'];
+                        $active = $row['active'];
+                        echo "<tr><th scope='row'>$x</th><td>$id</td><td>$username</td><td>$active</td><td>$admin</td><td><a class='btn btn-success' href='edit-user.php?edit={$row['user_id']}'>Edit User <span class='glyphicon glyphicon-chevron-right'></span></a><hr></td><td><a class='btn btn-danger' href='edit-user.php?delete={$row['user_id']}'>Delete Post <span class='glyphicon glyphicon-chevron-right'></span></a><hr></td></tr>";
                         
                         $x++;
                     }
@@ -57,7 +61,7 @@
 </table>
 </div>
           <div class="col-xs-6">
-           <form action="all_posts.php" method="POST">
+           <form action="all_users.php" method="POST">
                     <div class="input-group">
                         <input type="text" class="form-control" name="search" placeholder="Search by Titile">
                         <span class="input-group-btn">
@@ -71,14 +75,14 @@
                         if (isset($_POST['search'])){
                             $search = mysqli_real_escape_string($conn, $_POST['search']);
                             if ($search != ""){
-                                $get_stat = "select * from posts where post_title like '%{$search}%' order by post_date DESC";
-                                $posts = mysqli_query($conn, $get_stat);
-                                if (mysqli_num_rows($posts) > 0){
-                                    while ($row = mysqli_fetch_assoc($posts)){
-                                        echo "<h2><a href='../post.php?id={$row['post_id']}'>{$row['post_title']}</a></h2>";
-                                        echo "<a class='btn btn-success' href='edit-post.php?edit={$row['post_id']}'>Edit Post <span class='glyphicon glyphicon-chevron-right' ><a class='btn btn-danger' href='edit-post.php?delete={$row['post_id']}'>Delete Post <span class='glyphicon glyphicon-chevron-right'></span></a><hr></span></a><hr>";
+                                $get_stat = "select * from users where username like '%{$search}%'";
+                                $users = mysqli_query($conn, $get_stat);
+                                if (mysqli_num_rows($users) > 0){
+                                    while ($row = mysqli_fetch_assoc($users)){
+                                        echo "<h2><a href='#'>{$row['username']}</a></h2>";
+                                        echo "<a class='btn btn-success' href='edit-user.php?edit={$row['user_id']}'>Edit User <span class='glyphicon glyphicon-chevron-right' ><a class='btn btn-danger' href='edit-user.php?delete={$row['user_id']}'>Delete User <span class='glyphicon glyphicon-chevron-right'></span></a><hr></span></a><hr>";
                                         echo "";
-                                    }    
+                                    }  
                                 }else{
                                     echo "<h1>No Reult Found</h1>";
                                 }

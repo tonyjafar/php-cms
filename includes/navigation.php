@@ -32,7 +32,7 @@
                             echo "<li><a href='admin/index.php'>Admin</a></li>";
                         }
                         echo "<li><a href='logout.php'>logout</a></li>";
-                        echo "<li><a href='#'>{$username}</a></li>";
+                        echo "<li><a href='get_user.php'>{$username}</a></li>";
                     }else{
                         echo "<li><a href='register.php'>Register</a></li>";
                     }

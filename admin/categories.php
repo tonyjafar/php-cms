@@ -62,7 +62,7 @@ if (isset($_POST['Category'])){
                     <div class="col-lg-12">
                         <h1 class="page-header">
                             Welcome to Admin
-                            <small>Author</small>
+                            <small><?php echo $adminname; ?></small>
                         </h1>
                     </div>
 <div class="col-xs-6">
