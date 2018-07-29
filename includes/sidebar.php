@@ -18,23 +18,26 @@
                     </form>
                     <!-- /.input-group -->
                 </div>
-                
-                <div class="well">
-                    <h4>Login</h4>
-                    <form action="index.php" method="POST">
-                    <div class="form-group">
-                       <label for="email">Email</label>
-                        <input id="email" type="email" class="form-control" name="username">
-                        </div>
-                        <div class="form-group">
-                        <label for="password">Password</label>
-                        <input id="password" type="password" class="form-control" name="password">
-                        </div>
-                        <span class="input-group-btn">
-                            <input class="btn btn-success form-group" type="submit" value="Log in" name="login">
-                        </span>
-                         </form>
-                    </div>
+                <?php
+                if (!$user -> LoggedIn()){
+                    echo "<div class='well'>";
+                    echo "<h4>Login</h4>";
+                    echo "<form action='index.php' method='POST'>";
+                    echo "<div class='form-group'>";
+                       echo "<label for='email'>Email</label>";
+                        echo "<input id='email' type='email' class='form-control' name='username'>";
+                        echo "</div>";
+                        echo "<div class='form-group'>";
+                        echo "<label for='password'>Password</label>";
+                        echo "<input id='password' type='password' class='form-control' name='password'>";
+                        echo "</div>";
+                        echo "<span class='input-group-btn'>";
+                            echo "<input class='btn btn-success form-group' type='submit' value='Log in' name='login'>";
+                        echo "</span>";
+                         echo "</form>";
+                    echo "</div>";
+                           }
+                    ?>
 
                 <!-- Blog Categories Well -->
                 <div class="well">
