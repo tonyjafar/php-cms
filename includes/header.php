@@ -27,3 +27,7 @@
 </head>
 
 <body>
+<?php
+    include "admin/users.php";
+    $user = new Users();
+?>

@@ -22,7 +22,21 @@
                             echo "<li><a href='#'>{$row['cat_title']}</a></li>";
                         }
                     ?>
-                <li><a href='admin/index.php'>Admin</a></li>
+                <?php
+                    $logged = $user -> LoggedIn();
+                    echo $logged;
+                    if ($logged){
+                        $username = $_COOKIE['loggedIn'];
+                        $admin = $user -> IsAdmin($username);
+                        if ($admin){
+                            echo "<li><a href='admin/index.php'>Admin</a></li>";
+                        }
+                        echo "<li><a href='logout.php'>logout</a></li>";
+                        echo "<li><a href='#'>{$username}</a></li>";
+                    }else{
+                        echo "<li><a href='register.php'>Register</a></li>";
+                    }
+                    ?>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

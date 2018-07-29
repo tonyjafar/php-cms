@@ -20,10 +20,7 @@
                 </div>
                 
                 <div class="well">
-                   <?php
-                    
-                    ?>
-                    <h4>Register</h4>
+                    <h4>Login</h4>
                     <form action="index.php" method="POST">
                     <div class="form-group">
                        <label for="email">Email</label>
@@ -34,7 +31,7 @@
                         <input id="password" type="password" class="form-control" name="password">
                         </div>
                         <span class="input-group-btn">
-                            <input class="btn btn-success form-group" type="submit" value="Register" name="add">
+                            <input class="btn btn-success form-group" type="submit" value="Log in" name="login">
                         </span>
                          </form>
                     </div>
