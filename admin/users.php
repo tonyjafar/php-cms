@@ -1,15 +1,20 @@
 <?php
 class Users{
+    protected $conn;
+    
+    public function __construct(){
+        $this -> conn = mysqli_connect("localhost", "root", "", "cms");
+    }
+    
     function CreateUser(){
-            $conn = mysqli_connect("localhost", "root", "", "cms");
-            $username = mysqli_real_escape_string($conn, $_POST['username']);
-            $password = mysqli_real_escape_string($conn, $_POST['password']);
-            $password2 = mysqli_real_escape_string($conn, $_POST['password2']);
+            $username = mysqli_real_escape_string($this->conn, $_POST['username']);
+            $password = mysqli_real_escape_string($this->conn, $_POST['password']);
+            $password2 = mysqli_real_escape_string($this->conn, $_POST['password2']);
             if ($username != "" && $password != ""){
                 if (strlen($password) > 5){
                     if ($password === $password2){
                         $checkUser = "select username from users where username = '$username'";
-                        $result = mysqli_query($conn, $checkUser);
+                        $result = mysqli_query($this->conn, $checkUser);
                         if (mysqli_num_rows($result) == 0){
                             $hash = "$2y$10$";
                             $salt = "mysuperoverkillingsaltiwillnverused";
@@ -17,7 +22,7 @@ class Users{
                             $encPass = crypt($password, $hashSalt);
                             $createUser = "insert into users (username, password) ";
                             $createUser .= "values ('$username', '$encPass')";
-                            $createResult = mysqli_query($conn, $createUser);
+                            $createResult = mysqli_query($this->conn, $createUser);
                             if (!$createResult){
                                 return "Could not create the user please try again later";
                             }
@@ -52,13 +57,12 @@ class Users{
     }
     
     function ChangePass($username){
-            $conn = mysqli_connect("localhost", "root", "", "cms");
-            $oldPass = mysqli_real_escape_string($conn, $_POST['old-password']);
-            $pass1 = mysqli_real_escape_string($conn, $_POST['new-password']);
-            $pass2 = mysqli_real_escape_string($conn, $_POST['password2']);
+            $oldPass = mysqli_real_escape_string($this->conn, $_POST['old-password']);
+            $pass1 = mysqli_real_escape_string($this->conn, $_POST['new-password']);
+            $pass2 = mysqli_real_escape_string($this->conn, $_POST['password2']);
             if ($oldPass != "" && $pass1 != "" && $pass2 != ""){
                 $checkOld = "select password from users where username='$username'";
-                $result_checkOld = mysqli_query($conn, $checkOld);
+                $result_checkOld = mysqli_query($this->conn, $checkOld);
                 $result_checkOld = mysqli_fetch_assoc($result_checkOld);
                 $oldPassDB = $result_checkOld['password'];
                 if (password_verify($oldPass, $oldPassDB)){
@@ -69,7 +73,7 @@ class Users{
                             $hashSalt = $hash . $salt;
                             $encPass = crypt($pass1, $hashSalt);
                             $update = "update users set password = '$encPass' where username = '$username'";
-                            $result_update = mysqli_query($conn, $update);
+                            $result_update = mysqli_query($this->conn, $update);
                             if ($result_update){
                                 return "OK";
                             }
@@ -103,12 +107,11 @@ class Users{
         if ($this -> LoggedIn()){
             header("Location: index.php");
         }
-        $conn = mysqli_connect("localhost", "root", "", "cms");
-        $username = mysqli_real_escape_string($conn, $_POST['username']);
-        $password = mysqli_real_escape_string($conn, $_POST['password']);
+        $username = mysqli_real_escape_string($this->conn, $_POST['username']);
+        $password = mysqli_real_escape_string($this->conn, $_POST['password']);
         if ($username != "" && $password != ""){
             $getPass = "select password from users where username = '$username'";
-            $result = mysqli_query($conn, $getPass);
+            $result = mysqli_query($this->conn, $getPass);
             if ($result){
                 if (mysqli_num_rows($result) > 0){
                     if ($this -> IsActive($username)){
@@ -151,9 +154,8 @@ class Users{
     }
     
     function IsAdmin($username){
-        $conn = mysqli_connect("localhost", "root", "", "cms");
         $checkUser = "select admin from users where username = '$username'";
-        $result = mysqli_query($conn, $checkUser);
+        $result = mysqli_query($this->conn, $checkUser);
         $row = mysqli_fetch_assoc($result);
         if ($row['admin'] == 'yes'){
             return True;
@@ -164,9 +166,8 @@ class Users{
     }
     
     function IsActive($username){
-        $conn = mysqli_connect("localhost", "root", "", "cms");
         $checkUser = "select active from users where username = '$username'";
-        $result = mysqli_query($conn, $checkUser);
+        $result = mysqli_query($this->conn, $checkUser);
         if ($result){
             $row = mysqli_fetch_assoc($result);
             if ($row['active'] == 'yes'){
