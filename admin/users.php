@@ -144,7 +144,7 @@ class Users{
         }
         $name = "loggedIn";
         $value = "";
-        unset($_COOKIE[$cookie_name]);
+        unset($_COOKIE[$name]);
         setcookie($name, '', time() - 3600, "/");
         $newURL = "index.php";
         header('Location: '.$newURL);
