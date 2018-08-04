@@ -41,7 +41,11 @@
                         $count = mysqli_fetch_assoc($count);
                         $count = $count['count(*)'];
                         if ($count > 0){
-                            echo "<h1 class='page-header'> The Category has {$count} Posts </h1>";
+                            if ($count > 1){
+                                echo "<h1 class='page-header'> The Category has {$count} Posts </h1>";
+                            }else{
+                                echo "<h1 class='page-header'> The Category has {$count} Post </h1>";
+                            }
                             while ($row = mysqli_fetch_assoc($posts)){
                                 echo "<h2><a href='post.php?id={$row['post_id']}'>{$row['post_title']}</a></h2>";
                                 echo "<p class='lead'>by <a href='user-posts.php?author={$row['post_author']}'>{$row['post_author']}</a></p>";
