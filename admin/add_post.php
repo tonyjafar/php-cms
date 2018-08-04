@@ -84,7 +84,7 @@
     }
 ?>
 
-                     <form action="add_post.php" method="post">
+                     <form action="add_post.php" method="post" enctype="multipart/form-data">
         
         <div class="form-group">
            <label for="cat_id">Post Category</label>
@@ -130,7 +130,7 @@
         </div>
         <div class="form-group">
             <label for="post_image">Post Image</label>
-            <input class="form-control" id="post_image" type="text" name="image" placeholder="Post Image">
+            <input class="form-control" id="post_image" type="file" name="image" placeholder="Post Image">
         </div>
         <div class="form-group">
             <label for="post_tags">Post Tags</label>
