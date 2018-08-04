@@ -1,5 +1,6 @@
 <?php include "includes/header.php"; ?>
     <?php include "../includes/db.php"; ?>
+    <?php include "get-file.php"; ?>
     
 <?php
     $field_error = False;
@@ -19,23 +20,28 @@
                 $check_title = "select post_title from posts where post_title = '$post_title'";
                 $result = mysqli_query($conn, $check_title);
                 if (mysqli_num_rows($result) == 0){
-                    $cat_id = mysqli_real_escape_string($conn, $_POST['cat_id']);
-                    $post_author = mysqli_real_escape_string($conn, $_POST['post_author']);
-                    $date = mysqli_real_escape_string($conn, $_POST['date']);
-                    $image = mysqli_real_escape_string($conn, $_POST['image']);
-                    $content = mysqli_real_escape_string($conn, $_POST['content']);
-                    $tags = mysqli_real_escape_string($conn, $_POST['tags']);
-                    $user = mysqli_real_escape_string($conn, $_POST['user']);
-                    $status = mysqli_real_escape_string($conn, $_POST['status']);
-                    $statePart1 = "insert into posts (post_category_id, post_title, post_author, post_date, post_image, post_content, post_tags, post_user, post_status) ";
-                    $statePart2 = "values ('$cat_id', '$post_title', '$post_author', '$date', '$image', '$content', '$tags', '$user', '$status')";
-                    $stat = $statePart1 . $statePart2;
-                    $result = mysqli_query($conn, $stat);
+                    $image = new HandelFile();
+                    if ($image -> ChechImage() && $image -> ChechImageName()){
+                        $image_name = $image -> GetName();
+                        $cat_id = mysqli_real_escape_string($conn, $_POST['cat_id']);
+                        $post_author = mysqli_real_escape_string($conn, $_POST['post_author']);
+                        $date = mysqli_real_escape_string($conn, $_POST['date']);
+                        $content = mysqli_real_escape_string($conn, $_POST['content']);
+                        $tags = mysqli_real_escape_string($conn, $_POST['tags']);
+                        $user = mysqli_real_escape_string($conn, $_POST['user']);
+                        $status = mysqli_real_escape_string($conn, $_POST['status']);
+                        
+                        $statePart1 = "insert into posts (post_category_id, post_title, post_author, post_date, post_image, post_content, post_tags, post_user, post_status) ";
+                        $statePart2 = "values ('$cat_id', '$post_title', '$post_author', '$date', '$image_name', '$content', '$tags', '$user', '$status')";
+                        $stat = $statePart1 . $statePart2;
+                        $result = mysqli_query($conn, $stat);
+                    }
                     if (!$result){
                         $insert_error = True;
                         echo mysqli_error($conn);
 
                     }else{
+                        $image -> CopyFile();
                         $noErrors = True;
                     }
                 }else{
