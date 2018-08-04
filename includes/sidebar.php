@@ -49,7 +49,12 @@
                                 $query = "select * from categories";
                                 $result = mysqli_query($conn, $query);
                                 while ($row = mysqli_fetch_assoc($result)){
-                                    echo "<li><a href='cat_posts.php?cat={$row['cat_id']}'>{$row['cat_title']}</a>";
+                                    $postsCount = "select count(*) from posts where post_category_id = '{$row['cat_id']}' and post_status = 'public'";
+                                    $count = mysqli_query($conn, $postsCount);
+                                    $count = mysqli_fetch_assoc($count);
+                                    if ($count['count(*)'] > 0){
+                                        echo "<li><a href='cat_posts.php?cat={$row['cat_id']}'>{$row['cat_title']}</a>";
+                                    }
                                 }
                                 ?>
                             </ul>
