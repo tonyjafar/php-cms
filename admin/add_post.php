@@ -6,6 +6,7 @@
     $field_error = False;
     $insert_error = False;
     $title_error = False;
+    $image_error = False;
     $noErrors = False;
     if (isset($_POST['submit'])){
         foreach ($_POST as $key => $value){
@@ -30,11 +31,12 @@
                         $tags = mysqli_real_escape_string($conn, $_POST['tags']);
                         $user = mysqli_real_escape_string($conn, $_POST['user']);
                         $status = mysqli_real_escape_string($conn, $_POST['status']);
-                        
                         $statePart1 = "insert into posts (post_category_id, post_title, post_author, post_date, post_image, post_content, post_tags, post_user, post_status) ";
                         $statePart2 = "values ('$cat_id', '$post_title', '$post_author', '$date', '$image_name', '$content', '$tags', '$user', '$status')";
                         $stat = $statePart1 . $statePart2;
                         $result = mysqli_query($conn, $stat);
+                    }else{
+                       $image_error = True; 
                     }
                     if (!$result){
                         $insert_error = True;
@@ -74,6 +76,10 @@
     if ($field_error){
         echo "<div class='alert alert-danger' role='alert'>";
         echo "<h3>Please fill in all fields</h3>";
+        echo "</div>";
+    }elseif ($image_error){
+        echo "<div class='alert alert-danger' role='alert'>";
+        echo "<h3>Please check image file.</h3>";
         echo "</div>";
     }elseif ($insert_error){
         echo "<div class='alert alert-danger' role='alert'>";
