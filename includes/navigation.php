@@ -13,15 +13,7 @@
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                   
-                   <?php
-                        $query = "select * from categories";
-                        $cat = mysqli_query($conn, $query);
-                        while ($row = mysqli_fetch_assoc($cat)){
-                            echo "<li><a href='#'>{$row['cat_title']}</a></li>";
-                        }
-                    ?>
+                <ul class="nav navbar-right navbar-nav">
                 <?php
                     $logged = $user -> LoggedIn();
                     echo $logged;

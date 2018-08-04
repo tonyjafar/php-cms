@@ -46,10 +46,10 @@
                         <div class="col-lg-6">
                             <ul class="list-unstyled">
                                <?php
-                                $query = "select DISTINCT cat_title from categories";
+                                $query = "select * from categories";
                                 $result = mysqli_query($conn, $query);
                                 while ($row = mysqli_fetch_assoc($result)){
-                                    echo "<li><a href='#'>{$row['cat_title']}</a>";
+                                    echo "<li><a href='cat_posts.php?cat={$row['cat_id']}'>{$row['cat_title']}</a>";
                                 }
                                 ?>
                             </ul>

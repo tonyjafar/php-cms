@@ -21,7 +21,7 @@
                         if (mysqli_num_rows($result) !=0){
                             while ($row = mysqli_fetch_assoc($result)){
                                 echo "<h1>{$row['post_title']}</h1>";
-                                echo "<p class='lead'>by <a href='#'>{$row['post_author']}</a></p><hr>";
+                                echo "<p class='lead'>by <a href='user-posts.php?author={$row['post_author']}'>{$row['post_author']}</a></p><hr>";
                                 echo "<p><span class='glyphicon glyphicon-time'></span>{$row['post_date']}</p><hr>";
                                 echo "<img class='img-responsive' src='images/{$row['post_image']}' alt=''><hr>";
                                 echo "<p class='lead'>{$row['post_content']}</p><hr>";
