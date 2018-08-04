@@ -50,7 +50,7 @@
                         $username = $row['username'];
                         $admin = $row['admin'];
                         $active = $row['active'];
-                        echo "<tr><th scope='row'>$x</th><td>$id</td><td>$username</td><td>$active</td><td>$admin</td><td><a class='btn btn-success' href='edit-user.php?edit={$row['user_id']}'>Edit User <span class='glyphicon glyphicon-chevron-right'></span></a><hr></td><td><a class='btn btn-danger' href='edit-user.php?delete={$row['user_id']}'>Delete Post <span class='glyphicon glyphicon-chevron-right'></span></a><hr></td></tr>";
+                        echo "<tr><th scope='row'>$x</th><td>$id</td><td>$username</td><td>$active</td><td>$admin</td><td><a class='btn btn-success' href='edit-user.php?edit={$row['user_id']}'>Edit User <span class='glyphicon glyphicon-chevron-right'></span></a><hr></td><td><a class='btn btn-danger' href='edit-user.php?delete={$row['user_id']}'>Delete User <span class='glyphicon glyphicon-chevron-right'></span></a><hr></td></tr>";
                         
                         $x++;
                     }
