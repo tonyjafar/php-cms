@@ -165,7 +165,7 @@
         </div>
         <div class="form-group">
             <label for="post_image">Post Image</label>
-            <input class="form-control" id="post_image" type="text" name="image" value='<?php echo $image; ?>'>
+            <input class="form-control" id="post_image" type="text" name="image" value="<?php echo $image; ?>">
         </div>
         <div class="form-group">
             <label for="post_tags">Post Tags</label>

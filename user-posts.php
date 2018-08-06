@@ -51,7 +51,8 @@
                                 echo "<p class='lead'>by <a href='#'>{$row['post_author']}</a></p>";
                                 echo "<p><span class='glyphicon glyphicon-time'></span>{$row['post_date']}</p><hr>";
                                 echo "<img class='img-responsive' src='images/{$row['post_image']}' alt=''><hr>";
-                                echo "<p>{$row['post_content']}</p>";
+                                $content = substr($row['post_content'],0,50) . ".......";
+                                echo "<p>{$content}</p>";
                                 echo "<a class='btn btn-primary' href='post.php?id={$row['post_id']}'>Read More <span class='glyphicon glyphicon-chevron-right'></span></a><hr>";
                             }
                         }else{

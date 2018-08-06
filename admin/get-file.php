@@ -11,7 +11,7 @@ class HandelFile{
     function ChechImage(){
         $check = getimagesize($_FILES["image"]["tmp_name"]);
         if($check !== false) {
-        return True;
+            return True;
         } else {
             return False;
         }
