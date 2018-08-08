@@ -56,7 +56,7 @@ if (isset($_GET['acc'])){
                         $query = mysqli_query($conn, $getPost);
                         $title = mysqli_fetch_assoc($query);
                         $title = $title['post_title'];
-                        echo "<tr><th scope='row'>$x</th><td>$id</td><td>$user_name</td><td>$content</td><td><a href='../post.php?id={$post_id}'>$title</td><td>$date</td><td><a class='btn btn-success' href='comments.php?acc={$row['com_id']}'>Accept<span class='glyphicon glyphicon-chevron-right'></span></a><hr></td><td><a class='btn btn-danger' href='comments.php?del={$row['com_id']}'>Delete<span class='glyphicon glyphicon-chevron-right'></span></a><hr></td></tr>";
+                        echo "<tr><th scope='row'>$x</th><td>$id</td><td>$user_name</td><td>$content</td><td><a href='../post.php?id={$post_id}'>$title</a></td><td>$date</td><td><a class='btn btn-success' href='comments.php?acc={$row['com_id']}'>Accept<span class='glyphicon glyphicon-chevron-right'></span></a><hr></td><td><a class='btn btn-danger' href='comments.php?del={$row['com_id']}'>Delete<span class='glyphicon glyphicon-chevron-right'></span></a><hr></td></tr>";
                         
                         $x++;
                     }
