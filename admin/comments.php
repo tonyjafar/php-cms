@@ -37,6 +37,8 @@ if (isset($_GET['acc'])){
       <th scope='col'>ID</th>
       <th scope='col'>User</th>
       <th scope="col">Content</th>
+      <th scope="col">Post</th>
+      <th scope="col">Date</th>
     </tr>
   </thead>
   <tbody>
@@ -48,7 +50,13 @@ if (isset($_GET['acc'])){
                         $id = $row['com_id'];
                         $user_name = $row['user_name'];
                         $content = $row['com_content'];
-                        echo "<tr><th scope='row'>$x</th><td>$id</td><td>$user_name</td><td>$content</td><td><a class='btn btn-success' href='comments.php?acc={$row['com_id']}'>Accept<span class='glyphicon glyphicon-chevron-right'></span></a><hr></td><td><a class='btn btn-danger' href='comments.php?del={$row['com_id']}'>Delete<span class='glyphicon glyphicon-chevron-right'></span></a><hr></td></tr>";
+                        $post_id = $row['post_id'];
+                        $date = $row['com_date'];
+                        $getPost = "select post_title from posts where post_id = '$post_id'";
+                        $query = mysqli_query($conn, $getPost);
+                        $title = mysqli_fetch_assoc($query);
+                        $title = $title['post_title'];
+                        echo "<tr><th scope='row'>$x</th><td>$id</td><td>$user_name</td><td>$content</td><td>$title</td><td>$date</td><td><a class='btn btn-success' href='comments.php?acc={$row['com_id']}'>Accept<span class='glyphicon glyphicon-chevron-right'></span></a><hr></td><td><a class='btn btn-danger' href='comments.php?del={$row['com_id']}'>Delete<span class='glyphicon glyphicon-chevron-right'></span></a><hr></td></tr>";
                         
                         $x++;
                     }
