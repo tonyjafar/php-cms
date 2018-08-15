@@ -24,6 +24,16 @@
     
     $cats = mysqli_query($conn, "select * from categories");
     $catCount = mysqli_num_rows($cats);
+    $catsActiveCount = 0;
+     while ($row = mysqli_fetch_assoc($cats)){
+        $postsC = "select count(*) from posts where post_category_id = '{$row['cat_id']}' and post_status = 'public'";
+        $count = mysqli_query($conn, $postsC);
+        $count = mysqli_fetch_assoc($count);
+        if ($count['count(*)'] > 0){
+            $catsActiveCount++;
+        }
+    }
+    $catsNotActiveCount =  $catCount - $catsActiveCount;
 
 ?>
     <div id="wrapper">
@@ -148,7 +158,7 @@
           ['Posts', <?php echo $postsCount; ?>, <?php echo $postsActiveCount; ?>, <?php echo $postsNotActiveCount; ?>],
           ['Users', <?php echo $usersCount; ?>, <?php echo $usersActiveCount; ?>, <?php echo $usersNotActiveCount; ?>],
           ['Comments', <?php echo $commentsCount; ?>, <?php echo $commentsActiveCount; ?>, <?php echo $commentsNotActiveCount; ?>],
-          ['Categories', <?php echo $catCount; ?>, 0, 0]
+          ['Categories', <?php echo $catCount; ?>, <?php echo $catsActiveCount; ?>, <?php echo $catsNotActiveCount; ?>]
         ]);
 
         var options = {
@@ -163,7 +173,7 @@
         chart.draw(data, google.charts.Bar.convertOptions(options));
       }
     </script>
-<div id="columnchart_material" style="width: 800px; height: 500px;"></div>
+<div id="columnchart_material" style="width: 'auto'; height: 500px;"></div>
 
             </div>
             </div>
