@@ -26,7 +26,7 @@
     $catCount = mysqli_num_rows($cats);
     $catsActiveCount = 0;
      while ($row = mysqli_fetch_assoc($cats)){
-        $postsC = "select count(*) from posts where post_category_id = '{$row['cat_id']}' and post_status = 'public'";
+        $postsC = "select count(*) from posts where post_category_id = '{$row['cat_id']}'";
         $count = mysqli_query($conn, $postsC);
         $count = mysqli_fetch_assoc($count);
         if ($count['count(*)'] > 0){
