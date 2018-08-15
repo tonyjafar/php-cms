@@ -59,9 +59,6 @@
                     <li class="active">
                         <a href="comments.php"><i class="fa fa-fw fa-file"></i> Comments</a>
                     </li>
-                    <li>
-                        <a href="index-rtl.html"><i class="fa fa-fw fa-dashboard"></i> Profile</a>
-                    </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
