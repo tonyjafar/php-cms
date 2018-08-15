@@ -1,21 +1,29 @@
 <?php include "includes/header.php"; ?>
      <?php include "../includes/db.php"; ?>
 <?php
-    $postsCount = mysqli_query($conn, "select count(*) from posts");
-    $postsCount = mysqli_fetch_assoc($postsCount);
-    $postsCount = $postsCount['count(*)'];
-    
-    $commentsCount = mysqli_query($conn, "select count(*) from comments");
-    $commentsCount = mysqli_fetch_assoc($commentsCount);
-    $commentsCount = $commentsCount['count(*)'];
+    $posts = mysqli_query($conn, "select * from posts");
+    $postsCount = mysqli_num_rows($posts);
+    $postsActive = mysqli_query($conn, "select * from posts where post_status = 'public'");
+    $postsNotActive = mysqli_query($conn, "select * from posts where post_status = 'draft'");
+    $postsActiveCount = mysqli_num_rows($postsActive);
+    $postsNotActiveCount = mysqli_num_rows($postsNotActive);
 
-    $usersCount = mysqli_query($conn, "select count(*) from users");
-    $usersCount = mysqli_fetch_assoc($usersCount);
-    $usersCount = $usersCount['count(*)'];
+    $comments = mysqli_query($conn, "select * from comments");
+    $commentsCount = mysqli_num_rows($comments);
+    $commentsActive = mysqli_query($conn, "select * from comments where com_status = 'public'");
+    $commentsNotActive = mysqli_query($conn, "select * from comments where com_status = 'draft'");
+    $commentsActiveCount = mysqli_num_rows($commentsActive);
+    $commentsNotActiveCount =mysqli_num_rows($commentsNotActive);
+
+    $users = mysqli_query($conn, "select * from users");
+    $usersCount = mysqli_num_rows($users);
+    $usersActive = mysqli_query($conn, "select * from users where active='yes'");
+    $usersNotActive = mysqli_query($conn, "select * from users where active='no'");
+    $usersActiveCount = mysqli_num_rows($usersActive);
+    $usersNotActiveCount = mysqli_num_rows($usersNotActive);
     
-    $catCount = mysqli_query($conn, "select count(*) from categories");
-    $catCount = mysqli_fetch_assoc($catCount);
-    $catCount = $catCount['count(*)'];
+    $cats = mysqli_query($conn, "select * from categories");
+    $catCount = mysqli_num_rows($cats);
 
 ?>
     <div id="wrapper">
@@ -129,6 +137,35 @@
     </div>
 </div>
                 <!-- /.row -->
+            <div class="row">
+                <script type="text/javascript">
+      google.charts.load('current', {'packages':['bar']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Data', 'All', 'Active', 'Not Active'],
+          ['Posts', <?php echo $postsCount; ?>, <?php echo $postsActiveCount; ?>, <?php echo $postsNotActiveCount; ?>],
+          ['Users', <?php echo $usersCount; ?>, <?php echo $usersActiveCount; ?>, <?php echo $usersNotActiveCount; ?>],
+          ['Comments', <?php echo $commentsCount; ?>, <?php echo $commentsActiveCount; ?>, <?php echo $commentsNotActiveCount; ?>],
+          ['Categories', <?php echo $catCount; ?>, 0, 0]
+        ]);
+
+        var options = {
+          chart: {
+            title: 'Elements Overview',
+            subtitle: 'Posts, Users, Comments and Categories',
+          }
+        };
+
+        var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+      }
+    </script>
+<div id="columnchart_material" style="width: 800px; height: 500px;"></div>
+
+            </div>
             </div>
         </div>
 <?php include "includes/footer.php"; ?>
