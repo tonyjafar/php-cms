@@ -38,6 +38,9 @@
                                 <a href="all_posts.php">View all posts</a>
                             </li>
                             <li>
+                                <a href="draft_posts.php">Draft posts</a>
+                            </li>
+                            <li>
                                 <a href="add_post.php">Add Post</a>
                             </li>
                         </ul>
