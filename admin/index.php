@@ -15,6 +15,13 @@
     $commentsActiveCount = mysqli_num_rows($commentsActive);
     $commentsNotActiveCount =mysqli_num_rows($commentsNotActive);
 
+    $replies = mysqli_query($conn, "select * from replies");
+    $repliesCount = mysqli_num_rows($replies);
+    $repliesActive = mysqli_query($conn, "select * from replies where status = 'public'");
+    $repliesNotActive = mysqli_query($conn, "select * from replies where status = 'draft'");
+    $repliesActiveCount = mysqli_num_rows($repliesActive);
+    $repliesNotActiveCount =mysqli_num_rows($repliesNotActive);
+
     $users = mysqli_query($conn, "select * from users");
     $usersCount = mysqli_num_rows($users);
     $usersActive = mysqli_query($conn, "select * from users where active='yes'");
@@ -87,8 +94,8 @@
                         <i class="fa fa-comments fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                     <div class='huge'><?php echo $commentsCount; ?></div>
-                      <div>Comments</div>
+                     <div class='huge'><?php echo $commentsCount + $repliesCount; ?></div>
+                      <div>Comments/Replies</div>
                     </div>
                 </div>
             </div>
@@ -158,13 +165,14 @@
           ['Posts', <?php echo $postsCount; ?>, <?php echo $postsActiveCount; ?>, <?php echo $postsNotActiveCount; ?>],
           ['Users', <?php echo $usersCount; ?>, <?php echo $usersActiveCount; ?>, <?php echo $usersNotActiveCount; ?>],
           ['Comments', <?php echo $commentsCount; ?>, <?php echo $commentsActiveCount; ?>, <?php echo $commentsNotActiveCount; ?>],
+          ['Replies', <?php echo $repliesCount; ?>, <?php echo $repliesActiveCount; ?>, <?php echo $repliesNotActiveCount; ?>],
           ['Categories', <?php echo $catCount; ?>, <?php echo $catsActiveCount; ?>, <?php echo $catsNotActiveCount; ?>]
         ]);
 
         var options = {
           chart: {
             title: 'Elements Overview',
-            subtitle: 'Posts, Users, Comments and Categories',
+            subtitle: 'Posts, Users, Comments, Replies and Categories',
           }
         };
 

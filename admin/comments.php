@@ -12,6 +12,18 @@ if (isset($_GET['acc'])){
     $del = mysqli_query($conn, $delState);
     header("Location: comments.php");
 }
+
+if (isset($_GET['racc'])){
+    $rid = $_GET['racc'];
+    $acState = "update replies set status = 'public' where reply_id = '$rid'";
+    $acc = mysqli_query($conn, $acState);
+    header("Location: comments.php");
+}elseif (isset($_GET['rdel'])){
+    $rid = $_GET['rdel'];
+    $delState = "delete from replies where reply_id = '$rid'";
+    $del = mysqli_query($conn, $delState);
+    header("Location: comments.php");
+}
 ?>
 
     <div id="wrapper">
@@ -30,7 +42,8 @@ if (isset($_GET['acc'])){
                             <small><?php echo $adminname; ?></small>
                         </h1>
                     </div>
-                    <table class='table table-hover'>
+<h3>Comments</h3>
+<table class='table table-hover'>
   <thead>
     <tr>
       <th scope='col'>#</th>
@@ -61,6 +74,38 @@ if (isset($_GET['acc'])){
                         $x++;
                     }
                     ?>
+                        </tbody>
+                    </table>
+<h3>Replies</h3>
+<table class='table table-hover'>
+  <thead>
+    <tr>
+      <th scope='col'>#</th>
+      <th scope='col'>ID</th>
+      <th scope='col'>User</th>
+      <th scope="col">Com ID</th>
+      <th scope="col">Content</th>
+      <th scope="col">Date</th>
+    </tr>
+  </thead>
+  <tbody>
+                    <?php
+                    $replysStat = "select * from replies where status = 'draft'";
+                    $replies = mysqli_query($conn, $replysStat);
+                    $x = 1;
+                    while ($row = mysqli_fetch_assoc($replies)){
+                        $rid = $row['reply_id'];
+                        $user_name = $row['user_name'];
+                        $content = $row['reply_content'];
+                        $com_id = $row['com_id'];
+                        $date = $row['reply_date'];
+                        echo "<tr><th scope='row'>$x</th><td>$rid</td><td>$user_name</td><td>$com_id</td><td>$content</td><td>$date</td><td><a class='btn btn-success' href='comments.php?racc={$row['reply_id']}'>Accept<span class='glyphicon glyphicon-chevron-right'></span></a><hr></td><td><a class='btn btn-danger' href='comments.php?rdel={$row['reply_id']}'>Delete<span class='glyphicon glyphicon-chevron-right'></span></a><hr></td></tr>";
+                        
+                        $x++;
+                    }
+                    ?>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

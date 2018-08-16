@@ -54,6 +54,24 @@
                         }
                     }
                 }
+                if (isset($_POST['reply']) && isset($_GET['com_id'])){
+                     if ($user -> LoggedIn()){
+                        $reply =  mysqli_real_escape_string($conn, $_POST['reply']);
+                        if ($reply != ""){
+                            $date = date("Y-m-d H:i:s");
+                            $user_name = $_COOKIE['loggedIn'];
+                            $com_id = $_GET['com_id'];
+                            $commState = "insert into replies (com_id, user_name, reply_date, reply_content) ";
+                            $commState .= "values ('$com_id', '$user_name', '$date', '$reply')";
+                            $result = mysqli_query($conn, $commState);
+                            if ($result){
+                                echo "<h3>Reply sent to Admin to review.</h3>";
+                            }else{
+                                die(mysqli_error($conn));
+                            }
+                        }
+                    }
+                }
                 ?>
 
                 <!-- Blog Comments -->
@@ -79,43 +97,49 @@
                     $comments = mysqli_query($conn, $comState);
                     while ($row = mysqli_fetch_assoc($comments)){
                         echo "<div class='media'>";
-                        echo "<a class='pull-left' href='#'>";
+                        echo "<a class='pull-left' href=''>";
                         echo "<img class='media-object' src='http://placehold.it/64x64' alt=''>";
                         echo "</a>";
                         echo "<div class='media-body'>";
-                        echo "<h4 class='media-heading'>{$row['user_name']} <small>{$row['com_date']}</small></h4>";
-                        echo $row['com_content'];
+                        echo "<h4 class='media-heading'>{$row['user_name']} <small>{$row['com_date']}<a href='post.php?id={$id}&com_id={$row['com_id']}'> Reply</a></small></h4>";
+                        echo $row['com_content'];   
+                        $replyState = "select * from replies where com_id = '{$row['com_id']}' and status = 'public'";
+                        $replies = mysqli_query($conn, $replyState);
+                        if (mysqli_num_rows($replies) > 0){
+                            while ($r = mysqli_fetch_assoc($replies)){
+                                echo "<div class='media'>";
+                                echo "<a class='pull-left' href=''>";
+                                echo "<img class='media-object' src='http://placehold.it/64x64' alt=''>";
+                                echo "</a>";
+                                echo "<div class='media-body'>";
+                                echo "<h4 class='media-heading'>{$r['user_name']}";
+                                echo "<small> {$r['reply_date']}</small>";
+                                echo "</h4>";
+                                echo $r['reply_content'];
+                                echo "</div></div>";
+                            }
                         echo "</div></div>";
+                        }else{
+                            echo "</div></div>";
+                        }
+                        if (isset($_GET['com_id']) && $_GET['com_id'] == $row['com_id']){
+                            echo "<div class='well'>";
+                            echo "<h4>Leave a Reply: (You need to be logged in :)  )</h4>";
+                            echo "<form id='My_Location' action='post.php?id={$id}&com_id={$row['com_id']}' role='form' method='post'>";
+                            echo "<div class='form-group'>";
+                            echo "<textarea class='form-control' rows='3' name='reply'></textarea>";
+                            echo "</div>";
+                            echo "<button type='submit' class='btn btn-primary'>Submit</button>";
+                            echo "</form>";
+                            echo "</div>";
+                        }
                     }
                 ?>
-                
-                <div class="media">
-                    <a class="pull-left" href="#">
-                        <img class="media-object" src="http://placehold.it/64x64" alt="">
-                    </a>
-                    <div class="media-body">
-                        <h4 class="media-heading">Start Bootstrap
-                            <small>August 25, 2014 at 9:30 PM</small>
-                        </h4>
-                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                        <!-- Nested Comment -->
-                        <div class="media">
-                            <a class="pull-left" href="#">
-                                <img class="media-object" src="http://placehold.it/64x64" alt="">
-                            </a>
-                            <div class="media-body">
-                                <h4 class="media-heading">Nested Start Bootstrap
-                                    <small>August 25, 2014 at 9:30 PM</small>
-                                </h4>
-                                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                            </div>
-                        </div>
-                        <!-- End Nested Comment -->
-                    </div>
-                </div>
-
             </div>
-
+<script>
+var elmnt = document.getElementById("My_Location");
+elmnt.scrollIntoView(true);
+</script>
             <!-- Blog Sidebar Widgets Column -->
       <?php include "includes/sidebar.php"; ?>
         </div>
