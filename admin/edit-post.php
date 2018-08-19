@@ -179,6 +179,13 @@
             <label for="post_content">Post Content</label>
             <textarea class="form-control" id="post_content" rows="20" name="content"><?php echo $content; ?></textarea>
         </div>
+        <script>
+    ClassicEditor
+        .create( document.querySelector( '#post_content' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
         <br><br>
         <div class="form-group">
         <?php 

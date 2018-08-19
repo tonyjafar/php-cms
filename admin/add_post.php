@@ -165,5 +165,13 @@
             </div>
             </div>
         <br><br>
+        <script>
+    ClassicEditor
+        .create( document.querySelector( '#post_content' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
 </div>
+
 <?php include "includes/footer.php"; ?>
