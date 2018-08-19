@@ -46,7 +46,7 @@
                     while ($row = mysqli_fetch_assoc($posts)){
                         $id = $row['post_id'];
                         $title = $row['post_title'];
-                        echo "<tr><th scope='row'>$x</th><td>$id</td><td>$title</td><td><a class='btn btn-success' href='edit-post.php?edit={$row['post_id']}'>Edit Post <span class='glyphicon glyphicon-chevron-right'></span></a><hr></td><td><a class='btn btn-danger' href='edit-post.php?delete={$row['post_id']}'>Delete Post <span class='glyphicon glyphicon-chevron-right'></span></a><hr></td></tr>";
+                        echo "<tr><th scope='row'>$x</th><td>$id</td><td>$title</td><td><a class='btn btn-success' href='edit-post.php?edit={$row['post_id']}'>Edit Post <span class='glyphicon glyphicon-chevron-right'></span></a></td><td><a class='btn btn-danger' href='edit-post.php?delete={$row['post_id']}'>Delete Post <span class='glyphicon glyphicon-chevron-right'></span></a></td></tr>";
                         
                         $x++;
                     }
@@ -76,7 +76,7 @@
                                 if (mysqli_num_rows($posts) > 0){
                                     while ($row = mysqli_fetch_assoc($posts)){
                                         echo "<h2><a href='../post.php?id={$row['post_id']}'>{$row['post_title']}</a></h2>";
-                                        echo "<a class='btn btn-success' href='edit-post.php?edit={$row['post_id']}'>Edit Post <span class='glyphicon glyphicon-chevron-right' ><a class='btn btn-danger' href='edit-post.php?delete={$row['post_id']}'>Delete Post <span class='glyphicon glyphicon-chevron-right'></span></a><hr></span></a><hr>";
+                                        echo "<a class='btn btn-success' href='edit-post.php?edit={$row['post_id']}'>Edit Post <span class='glyphicon glyphicon-chevron-right' ><a class='btn btn-danger' href='edit-post.php?delete={$row['post_id']}'>Delete Post <span class='glyphicon glyphicon-chevron-right'></span></a></span></a>";
                                         echo "";
                                     }    
                                 }else{

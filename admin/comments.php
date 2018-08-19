@@ -69,7 +69,7 @@ if (isset($_GET['racc'])){
                         $query = mysqli_query($conn, $getPost);
                         $title = mysqli_fetch_assoc($query);
                         $title = $title['post_title'];
-                        echo "<tr><th scope='row'>$x</th><td>$id</td><td>$user_name</td><td>$content</td><td><a href='../post.php?id={$post_id}'>$title</a></td><td>$date</td><td><a class='btn btn-success' href='comments.php?acc={$row['com_id']}'>Accept<span class='glyphicon glyphicon-chevron-right'></span></a><hr></td><td><a class='btn btn-danger' href='comments.php?del={$row['com_id']}'>Delete<span class='glyphicon glyphicon-chevron-right'></span></a><hr></td></tr>";
+                        echo "<tr><th scope='row'>$x</th><td>$id</td><td>$user_name</td><td>$content</td><td><a href='../post.php?id={$post_id}'>$title</a></td><td>$date</td><td><a class='btn btn-success' href='comments.php?acc={$row['com_id']}'>Accept<span class='glyphicon glyphicon-chevron-right'></span></a></td><td><a class='btn btn-danger' href='comments.php?del={$row['com_id']}'>Delete<span class='glyphicon glyphicon-chevron-right'></span></a></td></tr>";
                         
                         $x++;
                     }
@@ -99,7 +99,7 @@ if (isset($_GET['racc'])){
                         $content = $row['reply_content'];
                         $com_id = $row['com_id'];
                         $date = $row['reply_date'];
-                        echo "<tr><th scope='row'>$x</th><td>$rid</td><td>$user_name</td><td>$com_id</td><td>$content</td><td>$date</td><td><a class='btn btn-success' href='comments.php?racc={$row['reply_id']}'>Accept<span class='glyphicon glyphicon-chevron-right'></span></a><hr></td><td><a class='btn btn-danger' href='comments.php?rdel={$row['reply_id']}'>Delete<span class='glyphicon glyphicon-chevron-right'></span></a><hr></td></tr>";
+                        echo "<tr><th scope='row'>$x</th><td>$rid</td><td>$user_name</td><td>$com_id</td><td>$content</td><td>$date</td><td><a class='btn btn-success' href='comments.php?racc={$row['reply_id']}'>Accept<span class='glyphicon glyphicon-chevron-right'></span></a></td><td><a class='btn btn-danger' href='comments.php?rdel={$row['reply_id']}'>Delete<span class='glyphicon glyphicon-chevron-right'></span></a></td></tr>";
                         
                         $x++;
                     }

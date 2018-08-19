@@ -37,7 +37,7 @@
                                 if (mysqli_num_rows($users) > 0){
                                     while ($row = mysqli_fetch_assoc($users)){
                                         echo "<h2><a href='#'>{$row['username']}</a></h2>";
-                                        echo "<a class='btn btn-success' href='edit-user.php?edit={$row['user_id']}'>Edit User <span class='glyphicon glyphicon-chevron-right' ><a class='btn btn-danger' href='edit-user.php?delete={$row['user_id']}'>Delete User <span class='glyphicon glyphicon-chevron-right'></span></a><hr></span></a><hr>";
+                                        echo "<a class='btn btn-success' href='edit-user.php?edit={$row['user_id']}'>Edit User <span class='glyphicon glyphicon-chevron-right' ><a class='btn btn-danger' href='edit-user.php?delete={$row['user_id']}'>Delete User <span class='glyphicon glyphicon-chevron-right'></span></a></span></a>";
                                         echo "";
                                     }  
                                 }else{
@@ -81,7 +81,7 @@
                         $username = $row['username'];
                         $admin = $row['admin'];
                         $active = $row['active'];
-                        echo "<tr><th scope='row'>$x</th><td>$id</td><td>$username</td><td>$active</td><td>$admin</td><td><a class='btn btn-success' href='edit-user.php?edit={$row['user_id']}'>Edit User <span class='glyphicon glyphicon-chevron-right'></span></a><hr></td><td><a class='btn btn-danger' href='edit-user.php?delete={$row['user_id']}'>Delete User <span class='glyphicon glyphicon-chevron-right'></span></a><hr></td></tr>";
+                        echo "<tr><th scope='row'>$x</th><td>$id</td><td>$username</td><td>$active</td><td>$admin</td><td><a class='btn btn-success' href='edit-user.php?edit={$row['user_id']}'>Edit User <span class='glyphicon glyphicon-chevron-right'></span></a></td><td><a class='btn btn-danger' href='edit-user.php?delete={$row['user_id']}'>Delete User <span class='glyphicon glyphicon-chevron-right'></span></a></td></tr>";
                         
                         $x++;
                     }
