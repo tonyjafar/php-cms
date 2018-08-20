@@ -6,7 +6,11 @@ if ($log){
     header("Location: index.php");
 }
 ?>
+<div class="container">
+
+<div class="row">
 <div class="col-xs-8">
+<h3>Welcome New User!!!</h3>
 <form action="register.php" method="post">
       <div class="form-group">
        <label for="email">Email</label>
@@ -60,8 +64,11 @@ if ($log){
             }
     ?>
 </div>
-
 <?php 
 include "includes/sidebar.php";
+            ?>
+    </div>
+    <hr>
+<?php 
 include "includes/footer.php";
 ?>

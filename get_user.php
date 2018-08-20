@@ -8,7 +8,9 @@
         header("Location: index.php");
     }
     ?>
-   
+
+<div class="container">
+<div class="row">
 <div class="col-md-8">
 <h1 class="page-header">Welcome To Your Profile <?php echo $username ?></h1>
 <h3>Change your Password:</h3>
@@ -50,7 +52,7 @@
                 break;
             case "3":
                 echo "<div class='alert alert-danger' role='alert'>";
-                echo "<h3>Password does not correct.</h3>";
+                echo "<h3>Password is not correct.</h3>";
                 echo "</div>";
                 break;
             case "OK":
@@ -61,7 +63,8 @@
     }
     ?>
 </div>
-
- 
 <?php include "includes/sidebar.php"; ?>
+</div>
+
+  <hr>
 <?php include "includes/footer.php"; ?>

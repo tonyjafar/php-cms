@@ -16,7 +16,6 @@
                 <ul class="nav navbar-right navbar-nav">
                 <?php
                     $logged = $user -> LoggedIn();
-                    echo $logged;
                     if ($logged){
                         $username = $_COOKIE['loggedIn'];
                         $admin = $user -> IsAdmin($username);
