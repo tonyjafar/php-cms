@@ -1,6 +1,6 @@
 
     <?php include "includes/header.php"; ?>
-
+    <?php include "includes/paginator.php"; ?>
     <?php 
             if (isset($_POST['login'])){
                 $result = $user -> Login();
@@ -41,14 +41,26 @@
                 <?php
                     $query = "select * from posts where post_status = 'public' order by post_date DESC";
                     $posts = mysqli_query($conn, $query);
-                    while ($row = mysqli_fetch_assoc($posts)){
-                        echo "<h2><a href='post.php?id={$row['post_id']}'>{$row['post_title']}</a></h2>";
-                        echo "<p class='lead'>by <a href='user-posts.php?author={$row['post_author']}'>{$row['post_author']}</a></p>";
-                        echo "<p><span class='glyphicon glyphicon-time'></span>{$row['post_date']}</p><hr>";
-                        echo "<img class='img-responsive' src='images/{$row['post_image']}' alt=''><hr>";
-                        $content = substr($row['post_content'],0,50) . ".......";
+                    $pager = new Pager();
+                    $pager -> listLength = mysqli_num_rows($posts);
+                    $get = $pager -> PageIt(mysqli_fetch_all($posts));
+                    foreach($get as $row){
+                        echo "<h2><a href='post.php?id={$row[0]}'>{$row[2]}</a></h2>";
+                        echo "<p class='lead'>by <a href='user-posts.php?author={$row[3]}'>{$row[3]}</a></p>";
+                        echo "<p><span class='glyphicon glyphicon-time'></span>{$row[4]}</p><hr>";
+                        echo "<img class='img-responsive' src='images/{$row['5']}' alt=''><hr>";
+                        $content = substr($row[6],0,50) . ".......";
                         echo "<p>{$content}</p>";
-                        echo "<a class='btn btn-primary' href='post.php?id={$row['post_id']}'>Read More <span class='glyphicon glyphicon-chevron-right'></span></a><hr>";
+                        echo "<a class='btn btn-primary' href='post.php?id={$row[0]}'>Read More <span class='glyphicon glyphicon-chevron-right'></span></a><hr>";
+                    }
+                    
+                    if($pager -> next == true){
+                        $pageNum = $pager ->PageNum +1;
+                        echo "<a class='btn btn-info pull-right' href=index.php?page={$pageNum}>Next Page</a>";
+                    }
+                    if($pager -> prev == true){
+                        $pageNumP = $pager ->PageNum -1;
+                        echo "<a class='btn btn-info pull-left' href=index.php?page={$pageNumP}>Prev Page</a>";
                     }
                 ?>
             </div>
