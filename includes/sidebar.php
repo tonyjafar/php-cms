@@ -68,8 +68,14 @@
 
                 <!-- Side Widget Well -->
                 <div class="well">
-                    <h4>Side Widget Well</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore, perspiciatis adipisci accusamus laudantium odit aliquam repellat tempore quos aspernatur vero.</p>
+                    <h4>Blog Authors</h4>
+                    <?php
+                    $query = "select DISTINCT post_author from posts where post_status = 'public'";
+                    $result = mysqli_query($conn, $query);
+                    while ($row = mysqli_fetch_assoc($result)){
+                        echo "<li><a href='user-posts.php?author={$row['post_author']}'>{$row['post_author']}</a>";
+                    }
+                    ?>
                 </div>
 
             </div>
