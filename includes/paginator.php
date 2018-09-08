@@ -46,6 +46,7 @@ class Pager{
             return $members;
         }else{
             header("Location: index.php");
+            exit();
         }
         
     }

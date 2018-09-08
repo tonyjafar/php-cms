@@ -31,10 +31,12 @@
                         }else{
                             $url = "index.php";
                             header('Location: '.$url);
+                            exit();
                         }
                     }else{
                         $url = "index.php";
                         header('Location: '.$url);
+                        exit();
                     }
                 
                  if (isset($_POST['comment'])){

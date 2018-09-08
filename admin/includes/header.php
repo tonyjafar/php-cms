@@ -4,10 +4,12 @@ include "users.php";
 $user = new Users();
 if (!$user -> LoggedIn()){
     header("Location: ../index.php");
+    exit(); // could not found a better solution to stop curl clients :D
 }
 $adminname = $_COOKIE['loggedIn'];
 if (!$user -> IsAdmin($adminname)){
     header("Location: ../index.php");
+    exit();
 }
 ?>
 <!DOCTYPE html>

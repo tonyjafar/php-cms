@@ -6,6 +6,7 @@
         $username = $_COOKIE['loggedIn'];
     }else{
         header("Location: index.php");
+        exit();
     }
     ?>
 

@@ -38,10 +38,12 @@
                     }else{
                         $newURL = "index.php";
                         header('Location: '.$newURL);
+                        exit();
                     }
                 }else{
                     $newURL = "index.php";
                     header('Location: '.$newURL);
+                    exit();
                 }
                 ?>
             </div>

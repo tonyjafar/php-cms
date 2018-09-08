@@ -49,9 +49,12 @@ class Users{
                 return $username;
             }else{
                 header('Location: index.php');
+                exit();
+                
             }
         }else{
             header('Location: index.php');
+            exit();
         }
         
     }
@@ -106,6 +109,7 @@ class Users{
     function Login(){
         if ($this -> LoggedIn()){
             header("Location: index.php");
+            exit();
         }
         $username = mysqli_real_escape_string($this->conn, $_POST['username']);
         $password = mysqli_real_escape_string($this->conn, $_POST['password']);
@@ -123,6 +127,7 @@ class Users{
                             $expire = time() + (60 * 60 * 24);
                             setcookie($name, $value, $expire, "/");
                             header("Location: index.php");
+                            exit();
                         }else{
                         return "Username or Password is not correct";
                         }
@@ -144,6 +149,7 @@ class Users{
     function Logout(){
         if (!$this -> LoggedIn()){
             header("Location: index.php");
+            exit();
         }
         $name = "loggedIn";
         $value = "";
@@ -151,6 +157,7 @@ class Users{
         setcookie($name, '', time() - 3600, "/");
         $newURL = "index.php";
         header('Location: '.$newURL);
+        exit();
     }
     
     function IsAdmin($username){
