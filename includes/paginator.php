@@ -12,7 +12,7 @@ class Pager{
         
         if (isset($_GET['page'])){
             $this -> PageNum = $_GET['page'];
-            if (!is_numeric($this -> PageNum)){
+            if (!is_numeric($this -> PageNum) || $this -> PageNum < 0){
                 header("Location: index.php");
             }
             $pageStart = ($this -> PageNum -1)* $this -> pageContain;
