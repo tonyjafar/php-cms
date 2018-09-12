@@ -47,8 +47,8 @@
                     foreach($get as $row){
                         echo "<h2><a href='post.php?id={$row[0]}'>{$row[2]}</a></h2>";
                         echo "<p class='lead'>by <a href='user-posts.php?author={$row[3]}'>{$row[3]}</a></p>";
-                        echo "<p><span class='glyphicon glyphicon-time'></span>{$row[4]}</p><hr>";
-                        echo "<img class='img-responsive' src='images/{$row['5']}' alt=''><hr>";
+                        echo "<p><span class='glyphicon glyphicon-time'></span>{$row[4]}</p>";
+                        echo "<img class='img-responsive' src='images/{$row['5']}' alt=''>";
                         $content = substr($row[6],0,50) . ".......";
                         echo "<p>{$content}</p>";
                         echo "<a class='btn btn-primary' href='post.php?id={$row[0]}'>Read More <span class='glyphicon glyphicon-chevron-right'></span></a><hr>";
