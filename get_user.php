@@ -3,7 +3,8 @@
 <?php
     $user = new Users();
     if ($user -> LoggedIn()){
-        $username = $_COOKIE['loggedIn'];
+        $value = explode(",", $_COOKIE['loggedIn']);
+        $username = $value[0];
     }else{
         header("Location: index.php");
         exit();

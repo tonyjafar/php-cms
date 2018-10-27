@@ -17,7 +17,8 @@
                 <?php
                     $logged = $user -> LoggedIn();
                     if ($logged){
-                        $username = $_COOKIE['loggedIn'];
+                        $value = explode(",", $_COOKIE['loggedIn']);
+                        $username = $value[0];
                         $admin = $user -> IsAdmin($username);
                         if ($admin){
                             echo "<li><a href='admin/index.php'>Admin</a></li>";

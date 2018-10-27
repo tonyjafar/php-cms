@@ -97,10 +97,22 @@ class Users{
     function LoggedIn(){
         if (isset($_COOKIE['loggedIn'])){
             $name = "loggedIn";
-            $value = $_COOKIE['loggedIn'];
-            $expire = time() + (60 * 60 * 24);
-            setcookie($name, $value, $expire, "/");
-            return True;
+            $value = explode(",", $_COOKIE['loggedIn']);
+            $username = $value[0];
+            $sessionID = $value[1];
+            $getSession = "select session from users where username = '$username'";
+            $getSession = mysqli_query($this->conn, $getSession);
+            $getSession = mysqli_fetch_assoc($getSession);
+            $getSession = $getSession['session'];
+            if ($sessionID === $getSession){
+                $expire = time() + (60 * 60 * 24);
+                $value = $username . "," . $sessionID;
+                setcookie($name, $value, $expire, "/");
+                return True;
+            }else{
+                return False;
+            }
+            
         }else{
             return False;
         }
@@ -123,9 +135,12 @@ class Users{
                         $DBPass = $row['password'];
                         if (password_verify($password, $DBPass)){
                             $name = "loggedIn";
-                            $value = $username;
+                            $sessionID = uniqid();
+                            $value = $username . "," . $sessionID;
                             $expire = time() + (60 * 60 * 24);
                             setcookie($name, $value, $expire, "/");
+                            $updateSession = "update users set session = '$sessionID' where username = '$username'";
+                            mysqli_query($this->conn, $updateSession);
                             header("Location: index.php");
                             exit();
                         }else{

@@ -6,7 +6,8 @@ if (!$user -> LoggedIn()){
     header("Location: ../index.php");
     exit(); // could not found a better solution to stop curl clients :D
 }
-$adminname = $_COOKIE['loggedIn'];
+$value = explode(",", $_COOKIE['loggedIn']);
+$adminname = $value[0];
 if (!$user -> IsAdmin($adminname)){
     header("Location: ../index.php");
     exit();
